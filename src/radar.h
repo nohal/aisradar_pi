@@ -103,7 +103,7 @@ public:
 	const wxString& caption = _("Radar Display"), 
 	const wxPoint& pos = wxDefaultPosition,
 	const wxSize& size = wxDefaultSize );
-	void SetColourScheme(PI_ColorScheme cs);
+      void SetColourScheme(PI_ColorScheme cs);
 	void OnLeftMouse( const wxPoint &curpos );
 	void paintEvent( wxPaintEvent& event );
 

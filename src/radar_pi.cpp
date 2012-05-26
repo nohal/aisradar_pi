@@ -65,7 +65,7 @@ extern "C" DECL_EXP void destroy_pi(opencpn_plugin* p)
 //
 //---------------------------------------------------------------------------------------------------------
 
-radar_pi::radar_pi(void *ppimgr) : opencpn_plugin(ppimgr), m_pRadarFrame(0)
+radar_pi::radar_pi(void *ppimgr) : opencpn_plugin_18(ppimgr), m_pRadarFrame(0)
 {
       initialize_my_images();
 }
@@ -193,11 +193,7 @@ void radar_pi::ShowPreferencesDialog( wxWindow* parent ) {
     wxDialog *dialog = new wxDialog( parent, wxID_ANY, _("Radar Preferences"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE );
     int border_size = 4;
 
-	wxColor     cl;
-	GetGlobalColor(_T("DILG1"), &cl);
-	dialog->SetBackgroundColour(cl);
-
-	wxBoxSizer* PanelSizer = new wxBoxSizer(wxVERTICAL);
+    wxBoxSizer* PanelSizer = new wxBoxSizer(wxVERTICAL);
     dialog->SetSizer(PanelSizer);
 
     //  Radar toolbox icon checkbox
@@ -209,13 +205,15 @@ void radar_pi::ShowPreferencesDialog( wxWindow* parent ) {
     RadarBoxSizer->Add(m_pRadarShowIcon, 1, wxALIGN_LEFT|wxALL, border_size);
     m_pRadarShowIcon->SetValue(m_radar_show_icon);
 
-	m_pRadarUseAis = new wxCheckBox( dialog, -1, _("Use AIS as radar source:"), wxDefaultPosition, wxSize(-1, -1), 0 );
+    m_pRadarUseAis = new wxCheckBox( dialog, -1, _("Use AIS as radar source:"), wxDefaultPosition, wxSize(-1, -1), 0 );
     RadarBoxSizer->Add(m_pRadarUseAis, 2, wxALIGN_LEFT|wxALL, border_size);
     m_pRadarUseAis->SetValue(m_radar_use_ais);
 
-	wxStdDialogButtonSizer* DialogButtonSizer = dialog->CreateStdDialogButtonSizer(wxOK|wxCANCEL);
+    wxStdDialogButtonSizer* DialogButtonSizer = dialog->CreateStdDialogButtonSizer(wxOK|wxCANCEL);
     PanelSizer->Add(DialogButtonSizer, 0, wxALIGN_RIGHT|wxALL, 5);
     dialog->Fit();
+
+    DimeWindow(dialog);
 
     if(dialog->ShowModal() == wxID_OK)       {
             //    Show Icon changed value?
@@ -229,21 +227,21 @@ void radar_pi::ShowPreferencesDialog( wxWindow* parent ) {
                         RemovePlugInTool(m_leftclick_tool_id);
 				  }
             }
-            m_radar_use_ais    = m_pRadarUseAis->GetValue();
-			SaveConfig();
+            m_radar_use_ais = m_pRadarUseAis->GetValue();
+		SaveConfig();
       }
 }
 
 void radar_pi::OnToolbarToolCallback(int id) {
-     ::wxBell();
+      ::wxBell();
       if(!m_pRadarFrame) {
             m_pRadarFrame = new RadarFrame();
-			m_pRadarFrame->Create ( m_parent_window, this, -1, _("AIS Radar view"),
-                               wxPoint( m_radar_frame_x, m_radar_frame_y), wxSize( m_radar_frame_sx, m_radar_frame_sy));
-  	        m_pRadarFrame->Show();
-	  } else {
-		  m_pRadarFrame->Close(true);
-	  }
+	      m_pRadarFrame->Create ( m_parent_window, this, -1, _("AIS Radar view"),
+            wxPoint( m_radar_frame_x, m_radar_frame_y), wxSize( m_radar_frame_sx, m_radar_frame_sy));
+  	      m_pRadarFrame->Show();
+	} else {
+		m_pRadarFrame->Close(true);
+	}
 }
 
 
@@ -318,7 +316,7 @@ int radar_pi::GetCogArrowMinutes(void) {
 void radar_pi::SetColorScheme(PI_ColorScheme cs) {
 	// Colours changed, pass the event on to the radarframe
 	if ( m_pRadarFrame ) {
-		m_pRadarFrame->SetColourScheme(cs);
+            m_pRadarFrame->SetColourScheme(cs);
 	}
 }
 

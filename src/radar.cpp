@@ -80,7 +80,7 @@ RadarFrame::~RadarFrame( ) {
 
 void RadarFrame::Init() {
 	GetGlobalColor(_T("DILG1"), &m_BgColour);
-	SetBackgroundColour(m_BgColour);
+      DimeWindow(this);
 }
 
 
@@ -154,11 +154,9 @@ bool RadarFrame::Create ( wxWindow *parent, radar_pi *ppi, wxWindowID id,
 
 
 void RadarFrame::SetColourScheme(PI_ColorScheme cs) {
-	  GetGlobalColor(_T("DILG1"), &m_BgColour);
-	  SetBackgroundColour(m_BgColour);
-	  this->Refresh();
+      GetGlobalColor(_T("DILG1"), &m_BgColour);
+      DimeWindow(this);
 }
-
 
 void RadarFrame::OnClose ( wxCloseEvent& event ) {
 	// Stop timer if still running

@@ -36,10 +36,10 @@
 #endif //precompiled headers
 
 #define     PLUGIN_VERSION_MAJOR    0
-#define     PLUGIN_VERSION_MINOR    91
+#define     PLUGIN_VERSION_MINOR    92
 
 #define     MY_API_VERSION_MAJOR    1
-#define     MY_API_VERSION_MINOR    5
+#define     MY_API_VERSION_MINOR    8
 
 #include "../../../include/ocpn_plugin.h"
 
@@ -51,11 +51,11 @@
 
 #define RADAR_TOOL_POSITION    -1          // Request default positioning of toolbar tool
 
-class radar_pi : public opencpn_plugin
+class radar_pi : public opencpn_plugin_18
 {
 public:
       radar_pi(void *ppimgr);
-	  ~radar_pi();
+	~radar_pi();
 
 //    The required PlugIn Methods
       int Init(void);
@@ -75,14 +75,14 @@ public:
       void ShowPreferencesDialog( wxWindow* parent );
       void OnToolbarToolCallback(int id);
       void SetAISSentence(wxString &sentence);
-	  void SetPositionFix(PlugIn_Position_Fix &pfix);
-	  void SetColorScheme(PI_ColorScheme cs);
+	void SetPositionFix(PlugIn_Position_Fix &pfix);
+	void SetColorScheme(PI_ColorScheme cs);
 
 // Other public methods
-    void             SetRadarFrameX    (int x)  { m_radar_frame_x  = x;   }
-    void             SetRadarFrameY    (int x)  { m_radar_frame_y  = x;   }
-    void             SetRadarFrameSizeX(int x)  { m_radar_frame_sx = x;   }
-    void             SetRadarFrameSizeY(int x)  { m_radar_frame_sy = x;   }
+      void             SetRadarFrameX    (int x)  { m_radar_frame_x  = x;   }
+      void             SetRadarFrameY    (int x)  { m_radar_frame_y  = x;   }
+      void             SetRadarFrameSizeX(int x)  { m_radar_frame_sx = x;   }
+      void             SetRadarFrameSizeY(int x)  { m_radar_frame_sy = x;   }
 	void             SetRadarNorthUp   (bool x) { m_radar_north_up = x;   }
 	void             SetRadarRange     (int x)  { m_radar_range    = x;   }
 	bool             GetRadarNorthUp   (void)   { return m_radar_north_up;}
@@ -93,7 +93,7 @@ public:
 	wxFileConfig    *GetConfig         (void)   { return m_pconfig;       }
 	ArrayOfPlugIn_AIS_Targets  *GetAisTargets();    
 	void OnRadarFrameClose();
-    bool             ShowMoored        (void);
+      bool             ShowMoored        (void);
 	double           GetMooredSpeed    (void);
 	bool             ShowCogArrows     (void);
 	int              GetCogArrowMinutes(void);
@@ -103,29 +103,26 @@ private:
       bool SaveConfig(void);
 
 private:
-	  wxFileConfig     *m_pconfig;
+	wxFileConfig     *m_pconfig;
       wxWindow         *m_parent_window;
       RadarFrame       *m_pRadarFrame;
-	  ArrayOfPlugIn_AIS_Targets *AisTargets;
-	  PI_ColorScheme	m_cs;
+	ArrayOfPlugIn_AIS_Targets *AisTargets;
+	PI_ColorScheme	m_cs;
       int               m_display_width, m_display_height;
       int               m_leftclick_tool_id;
       int               m_radar_frame_x, m_radar_frame_y;
       int               m_radar_frame_sx, m_radar_frame_sy;
-	  int               m_radar_range;
+	int               m_radar_range;
       double            m_lat;
-	  double            m_lon;
-	  double            m_cog;
-	  double            m_sog;
-	  int               m_sats;
+	double            m_lon;
+	double            m_cog;
+	double            m_sog;
+	int               m_sats;
       bool              m_radar_show_icon;
       bool              m_radar_use_ais;
-	  bool              m_radar_north_up;
+	bool              m_radar_north_up;
       wxCheckBox       *m_pRadarShowIcon;
       wxCheckBox       *m_pRadarUseAis;
 };
 
 #endif
-
-
-
